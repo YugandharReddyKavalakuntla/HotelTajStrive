@@ -118,6 +118,58 @@ function renderCartPage() {
   totals.classList.remove("d-none");
 }
 
+// function printInvoice() {
+//   const name = document.getElementById("customerName").value.trim();
+//   const mobile = document.getElementById("customerMobile").value.trim();
+//   if (!name || !mobile || !/^[6-9]\d{9}$/.test(mobile)) {
+//     alert("Please enter a valid name and 10-digit mobile number.");
+//     return;
+//   }
+
+//   document.getElementById("invCustomerName").textContent = name;
+//   document.getElementById("invCustomerMobile").textContent = mobile;
+//   document.getElementById("invDate").textContent = new Date().toLocaleString();
+//   const invTbody = document.querySelector("#invItems tbody");
+//   invTbody.innerHTML = "";
+
+//   let total = 0;
+//   Object.entries(cart).forEach(([id, qty]) => {
+//     const item = items.find(i => i.id == id);
+//     const sub = item.price * qty;
+//     total += sub;
+//     invTbody.innerHTML += `<tr><td>${item.name}</td><td>${qty}</td><td>₹${item.price.toFixed(2)}</td><td>₹${sub.toFixed(2)}</td></tr>`;
+//   });
+
+//   const cgst = total * 0.025, sgst = total * 0.025, grand = total + cgst + sgst;
+//   document.getElementById("invTotal").textContent = total.toFixed(2);
+//   document.getElementById("invCgst").textContent = cgst.toFixed(2);
+//   document.getElementById("invSgst").textContent = sgst.toFixed(2);
+//   document.getElementById("invGrand").textContent = grand.toFixed(2);
+
+//   document.getElementById("invoice").classList.remove("d-none");
+//   setTimeout(() => {
+//     window.print();
+//     localStorage.removeItem("userCart");
+//     window.location.href = "index.html";
+//   }, 1500);
+// }
+
+// Page routing logic
+// document.addEventListener("DOMContentLoaded", () => {
+//   const path = window.location.pathname;
+//   if (path.includes("index.html") || path === "/") {
+//     renderMenu();
+//     showMenu("food");
+//   } else if (path.includes("cart.html")) {
+//     renderCartPage();
+//     document.getElementById("checkoutBtn").addEventListener("click", printInvoice);
+//   }
+// });
+
+function isMobile() {
+  return /Mobi|Android|iPhone/i.test(navigator.userAgent);
+}
+
 function printInvoice() {
   const name = document.getElementById("customerName").value.trim();
   const mobile = document.getElementById("customerMobile").value.trim();
@@ -129,10 +181,11 @@ function printInvoice() {
   document.getElementById("invCustomerName").textContent = name;
   document.getElementById("invCustomerMobile").textContent = mobile;
   document.getElementById("invDate").textContent = new Date().toLocaleString();
+
   const invTbody = document.querySelector("#invItems tbody");
   invTbody.innerHTML = "";
-
   let total = 0;
+
   Object.entries(cart).forEach(([id, qty]) => {
     const item = items.find(i => i.id == id);
     const sub = item.price * qty;
@@ -146,25 +199,38 @@ function printInvoice() {
   document.getElementById("invSgst").textContent = sgst.toFixed(2);
   document.getElementById("invGrand").textContent = grand.toFixed(2);
 
-  document.getElementById("invoice").classList.remove("d-none");
-  setTimeout(() => {
-    window.print();
-    localStorage.removeItem("userCart");
-    window.location.href = "index.html";
-  }, 300);
-}
+  const invoiceContent = document.getElementById("invoice").outerHTML;
 
-// Page routing logic
-// document.addEventListener("DOMContentLoaded", () => {
-//   const path = window.location.pathname;
-//   if (path.includes("index.html") || path === "/") {
-//     renderMenu();
-//     showMenu("food");
-//   } else if (path.includes("cart.html")) {
-//     renderCartPage();
-//     document.getElementById("checkoutBtn").addEventListener("click", printInvoice);
-//   }
-// });
+  if (isMobile()) {
+    const win = window.open('', '_blank');
+    win.document.write(`
+      <html>
+      <head>
+        <title>Invoice</title>
+        <style>
+          body { font-family: sans-serif; padding: 20px; }
+          table { width: 100%; border-collapse: collapse; }
+          th, td { border: 1px solid #000; padding: 4px; font-size: 12px; }
+        </style>
+      </head>
+      <body>${invoiceContent}</body></html>
+    `);
+    win.document.close();
+    setTimeout(() => {
+      win.print();
+      win.close();
+      localStorage.removeItem("userCart");
+      window.location.href = "index.html";
+    }, 1000);
+  } else {
+    document.getElementById("invoice").classList.remove("d-none");
+    setTimeout(() => {
+      window.print();
+      localStorage.removeItem("userCart");
+      window.location.href = "index.html";
+    }, 1000);
+  }
+}
 
 
 document.addEventListener("DOMContentLoaded", () => {
