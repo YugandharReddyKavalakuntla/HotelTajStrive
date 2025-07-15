@@ -155,13 +155,30 @@ function printInvoice() {
 }
 
 // Page routing logic
+// document.addEventListener("DOMContentLoaded", () => {
+//   const path = window.location.pathname;
+//   if (path.includes("index.html") || path === "/") {
+//     renderMenu();
+//     showMenu("food");
+//   } else if (path.includes("cart.html")) {
+//     renderCartPage();
+//     document.getElementById("checkoutBtn").addEventListener("click", printInvoice);
+//   }
+// });
+
+
 document.addEventListener("DOMContentLoaded", () => {
   const path = window.location.pathname;
-  if (path.includes("index.html") || path === "/") {
+  const isCartPage = path.includes("cart");
+
+  if (isCartPage) {
+    renderCartPage();
+    const checkoutBtn = document.getElementById("checkoutBtn");
+    if (checkoutBtn) {
+      checkoutBtn.addEventListener("click", printInvoice);
+    }
+  } else {
     renderMenu();
     showMenu("food");
-  } else if (path.includes("cart.html")) {
-    renderCartPage();
-    document.getElementById("checkoutBtn").addEventListener("click", printInvoice);
   }
 });
