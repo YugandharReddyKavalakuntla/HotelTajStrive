@@ -109,6 +109,8 @@ footer strong {
     position: fixed;
     top: 0; left: 0;
     width: 100vw;
+    max-width: 800px; 
+    margin: auto;     
     padding: 20px;
     background: #fff;
     color: #000;
