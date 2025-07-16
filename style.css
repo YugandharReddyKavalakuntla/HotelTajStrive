@@ -3,22 +3,24 @@
   --brand-green: #28a745;
 }
 
+/* Global */
 body {
-  font-family: 'Segoe UI', sans-serif;
+  font-family: "Segoe UI", sans-serif;
   background: linear-gradient(to right, #f9fafb, #eef2f7);
   color: #333;
 }
 
+/* Header / Logo */
 .logo {
   height: 60px;
   border-radius: 10px;
 }
-
 h1 {
   font-weight: 700;
   color: var(--brand-blue);
 }
 
+/* Buttons */
 .btn-outline-primary,
 .btn-outline-success {
   transition: 0.3s;
@@ -26,55 +28,51 @@ h1 {
   padding: 10px 20px;
   border-radius: 30px;
 }
-
 .btn-outline-primary:hover {
   background: var(--brand-blue);
   color: #fff;
 }
-
 .btn-outline-success:hover {
   background: var(--brand-green);
   color: #fff;
 }
 
+/* Cards */
 .card {
   border: none;
   border-radius: 15px;
   transition: 0.2s;
 }
-
 .card:hover {
   transform: translateY(-5px);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 }
-
 .card-title {
   font-size: 1.2rem;
   font-weight: 600;
   color: var(--brand-blue);
 }
-
 .card-text {
   color: #555;
 }
-
 .card-img-top {
   height: 180px;
   object-fit: cover;
   border-radius: 15px 15px 0 0;
 }
 
+/* Footer */
 footer.footer {
   background: var(--brand-blue);
   color: #fff;
   padding: 1.5rem;
   text-align: center;
 }
-
 footer strong {
   color: #ffc107;
 }
 
+/* Floating cart button */
 .floating-cart-btn {
   position: fixed;
   bottom: 20px;
@@ -91,7 +89,6 @@ footer strong {
   z-index: 9999;
   text-decoration: none;
 }
-
 .floating-cart-btn span {
   background: #fff;
   color: var(--brand-green);
@@ -100,22 +97,17 @@ footer strong {
   font-weight: bold;
 }
 
+/* Print styles for invoice */
 @page {
   size: A4 portrait;
   margin: 1cm;
 }
-
 @media print {
-  body * {
-    visibility: hidden !important;
-  }
-  #invoice, #invoice * {
-    visibility: visible !important;
-  }
+  body * { visibility: hidden !important; }
+  #invoice, #invoice * { visibility: visible !important; }
   #invoice {
     position: fixed;
-    top: 0;
-    left: 0;
+    top: 0; left: 0;
     width: 100vw;
     padding: 20px;
     background: #fff;
@@ -123,17 +115,11 @@ footer strong {
     font-size: 12px;
     z-index: 9999;
   }
-  table {
-    width: 100% !important;
-    border-collapse: collapse !important;
-  }
-  table th,
-  table td {
+  table { width: 100% !important; border-collapse: collapse !important; }
+  table th, table td {
     border: 1px solid #000 !important;
     padding: 4px !important;
     font-size: 11px;
   }
-  h2, h4, h5, p {
-    margin: 4px 0;
-  }
+  h2, h4, h5, p { margin: 4px 0; }
 }
